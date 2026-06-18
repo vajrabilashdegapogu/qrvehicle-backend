@@ -95,21 +95,28 @@ public class VehicleController {
     @PostMapping("/from-order/{orderId}")
     public VehicleOwner createFromOrder(@PathVariable Long orderId) {
 
-        Order order = orderService.getById(orderId); // ✅ now works
+    Order order = orderService.getById(orderId);
 
-        VehicleOwner v = new VehicleOwner();
-        v.setOwnerName(order.getName());
-        v.setPhoneNumber(order.getPhone());
-        v.setVehicleNumber(order.getVehicleNumber());
+    VehicleOwner v = new VehicleOwner();
+    v.setOwnerName(order.getName());
+    v.setPhoneNumber(order.getPhone());
+    v.setVehicleNumber(order.getVehicleNumber());
+    v.setAddress(order.getAddress()); // ✅ already fixed
 
-        return vehicleService.save(v); // ✅ correct service
+    VehicleOwner saved = vehicleService.save(v);
+
+    // ✅ DELETE ORDER AFTER SUCCESS
+    orderService.delete(orderId);
+
+    return saved;
     }
 
     // QR
     @GetMapping("/qr/{code}")
     public ResponseEntity<byte[]> getQR(@PathVariable String code) throws Exception {
 
-        String url = "https://qrvehicle-frontend.vercel.app/v/" + code;
+        // String url = "https://qrvehicle-frontend.vercel.app/v/" + code;
+        String url = "https://owntag.in/v/" + code;
         byte[] qr = QRGenerator.generateQR(url);
 
         return ResponseEntity.ok()

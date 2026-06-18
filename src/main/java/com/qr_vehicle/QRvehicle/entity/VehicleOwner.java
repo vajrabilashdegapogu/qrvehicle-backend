@@ -18,6 +18,7 @@ public class VehicleOwner {
     private String ownerName;
     private String phoneNumber;
     private String vehicleNumber;
+    private String address;
 
     @Column(unique = true)
     private String uniqueCode;
