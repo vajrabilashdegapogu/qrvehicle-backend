@@ -25,6 +25,7 @@ import com.qr_vehicle.QRvehicle.entity.VehicleOwner;
 import com.qr_vehicle.QRvehicle.service.OrderService;
 import com.qr_vehicle.QRvehicle.service.VehicleService;
 import com.qr_vehicle.QRvehicle.util.QRGenerator;
+import com.qr_vehicle.QRvehicle.util.TagPdfGenerator;
 
 @RestController
 @RequestMapping("/api")
@@ -49,6 +50,21 @@ public class VehicleController {
     // public VehicleOwner get(@PathVariable String code) {
     //     return vehicleService.getByCode(code);
     // }
+
+    @GetMapping("/tag-pdf/{code}")
+    public ResponseEntity<byte[]> getTagPdf(@PathVariable String code) throws Exception {
+
+    // String url = "http://localhost:3000/v/" + code;
+    String url = "https://owntag.in/v/" + code;
+    byte[] qr = QRGenerator.generateQR(url);
+
+    byte[] pdf = TagPdfGenerator.generateTag(qr);
+
+    return ResponseEntity.ok()
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment")
+        .header(HttpHeaders.CONTENT_TYPE, "application/pdf")
+        .body(pdf);
+    }
 
     @GetMapping("/vehicle/{code}")
     public ResponseEntity<VehicleOwner> get(@PathVariable String code) {
@@ -127,8 +143,8 @@ public class VehicleController {
     public ResponseEntity<byte[]> getQR(@PathVariable String code) throws Exception {
 
         // String url = "https://qrvehicle-frontend.vercel.app/v/" + code;
-        String url = "https://owntag.in/v/" + code;
-        // String url = "http://localhost:3000/v/" + code;
+        // String url = "https://owntag.in/v/" + code;
+        String url = "http://localhost:3000/v/" + code;
         byte[] qr = QRGenerator.generateQR(url);
 
         return ResponseEntity.ok()
@@ -149,5 +165,3 @@ public class VehicleController {
     return vehicleService.save(v);
     }
 }
-
-
