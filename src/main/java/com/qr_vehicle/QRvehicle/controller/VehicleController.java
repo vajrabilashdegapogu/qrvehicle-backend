@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,14 +49,9 @@ public class VehicleController {
     } // ✅ FIXED
 
     @PostMapping("/add")
-    public VehicleOwner add(@RequestBody VehicleOwner v) {
+    public VehicleOwner add( @Validated @RequestBody VehicleOwner v) {
         return vehicleService.save(v);
     }
-
-    // @GetMapping("/vehicle/{code}")
-    // public VehicleOwner get(@PathVariable String code) {
-    //     return vehicleService.getByCode(code);
-    // }
 
     @GetMapping("/tag-pdf/{code}")
     public ResponseEntity<byte[]> getTagPdf(@PathVariable String code) throws Exception {
