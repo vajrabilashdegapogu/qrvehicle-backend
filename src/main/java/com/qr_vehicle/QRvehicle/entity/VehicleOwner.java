@@ -15,9 +15,16 @@ public class VehicleOwner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String ownerName;
+
+    @NotBlank
     private String phoneNumber;
+
+    @NotBlank
     private String vehicleNumber;
+
+    @NotBlank
     private String address;
 
     @Column(unique = true)

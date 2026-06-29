@@ -29,7 +29,13 @@ import com.qr_vehicle.QRvehicle.util.TagPdfGenerator;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
+@CrossOrigin(
+origins = {
+    "https://owntag.in",
+    "https://www.owntag.in"
+},
+allowCredentials = "true"
+)
 public class VehicleController {
 
     private final VehicleService vehicleService; // ✅ clear name
