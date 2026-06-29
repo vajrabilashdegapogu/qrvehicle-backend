@@ -1,7 +1,8 @@
 package com.qr_vehicle.QRvehicle.service;
 
 import java.util.List;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -32,13 +33,18 @@ public class OrderService {
 
         // Check if already registered in Customers
         if (vehicleRepo.existsByVehicleNumber(vehicleNumber)) {
-            throw new RuntimeException("Vehicle already registered.");
-        }
+    throw new ResponseStatusException(
+        HttpStatus.BAD_REQUEST,
+        "Vehicle already registered."
+    );
+    }
 
-        // Check if already exists in Orders
-        if (repo.existsByVehicleNumber(vehicleNumber)) {
-            throw new RuntimeException("Vehicle already ordered.");
-        }
+    if (repo.existsByVehicleNumber(vehicleNumber)) {
+        throw new ResponseStatusException(
+            HttpStatus.BAD_REQUEST,
+            "Vehicle already ordered."
+        );
+    }
 
         return repo.save(order);
     }
