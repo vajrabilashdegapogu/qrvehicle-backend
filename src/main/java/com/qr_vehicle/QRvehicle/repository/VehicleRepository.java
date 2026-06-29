@@ -33,5 +33,5 @@ public interface VehicleRepository extends JpaRepository<VehicleOwner, Long> {
     // Exists checks (faster than fetching the whole entity)
     boolean existsByVehicleNumber(String vehicleNumber);
 
-    boolean existsByPhoneNumber(String phoneNumber);
+    
 }

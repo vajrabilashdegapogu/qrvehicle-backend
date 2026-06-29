@@ -43,18 +43,7 @@ public class VehicleService {
         }
 
         // Duplicate phone number check
-        if (repo.existsByPhoneNumber(v.getPhoneNumber())) {
-
-            // Allow update of same record
-            if (v.getId() == null ||
-                repo.findByPhoneNumber(v.getPhoneNumber())
-                        .get()
-                        .getId()
-                        .longValue() != v.getId().longValue()) {
-
-                throw new RuntimeException("Phone number already registered.");
-            }
-        }
+        
 
         return repo.save(v);
     }
