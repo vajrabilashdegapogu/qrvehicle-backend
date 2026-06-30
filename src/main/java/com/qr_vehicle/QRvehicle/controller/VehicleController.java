@@ -57,6 +57,7 @@ public class VehicleController {
     public ResponseEntity<byte[]> getTagPdf(@PathVariable String code) throws Exception {
 
     String url = "https://owntag.in/v/" + code;
+    // String url = "http://localhost:3000/v/" + code;
     byte[] qr = QRGenerator.generateQR(url);
 
     byte[] pdf = TagPdfGenerator.generateTag(qr);
@@ -144,6 +145,7 @@ public class VehicleController {
     public ResponseEntity<byte[]> getQR(@PathVariable String code) throws Exception {
 
         String url = "https://owntag.in/v/" + code;
+        // String url = "http://localhost:3000/v/" + code;
         byte[] qr = QRGenerator.generateQR(url);
 
         return ResponseEntity.ok()

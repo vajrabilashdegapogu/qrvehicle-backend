@@ -13,7 +13,7 @@ import com.qr_vehicle.QRvehicle.service.OrderService;
 @CrossOrigin(
     origins = {
         "https://owntag.in",
-        "https://www.owntag.in"
+        "https://www.owntag.in",
     },
     allowCredentials = "true"
 )
@@ -57,11 +57,7 @@ public class OrderController {
             @PathVariable Long id,
             @RequestParam String status) {
 
-        Order order = service.getById(id);
-
-        order.setStatus(status);
-
-        return service.save(order);
+        return service.updateStatus(id, status);
     }
 
     // =========================
